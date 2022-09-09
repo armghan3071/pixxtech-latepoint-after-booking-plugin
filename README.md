@@ -1,1 +1,1 @@
-"# pixxtech-latepoint-after-booking-plugin" 
+## pixxtech-latepoint-after-booking-plugin
