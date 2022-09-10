@@ -26,9 +26,9 @@ function add_api_page_html() {
     <?php if(count($shops) > 0){ ?>
     <div class="notice notice-success is-dismissible">
         <p>Shops Loaded</p>
-        <!-- <pre>
-        <?php print_r($pt_options['body']['data']['booking']); ?>
-    </pre> -->
+         <pre>
+        <!-- <?php print_r($pt_options); ?> -->
+    </pre>
     </div>
 
     <h1><?php echo esc_html( get_admin_page_title() ) ?></h1>
@@ -149,10 +149,13 @@ function SaveBookingOnServer($booking){
         }
     }
     $serv_ids = implode(",", $services_ids);
-    $results = $wpdb->get_results( "SELECT se.name, se.charge_amount as price, se.short_description as desc, sbe.price AS total, sbe.quantity  FROM ".$wpdb->prefix."latepoint_service_extras AS se
+    $query = "SELECT se.name, se.charge_amount as price, se.short_description, sbe.price AS total, sbe.quantity  FROM ".$wpdb->prefix."latepoint_service_extras AS se
     INNER JOIN ".$wpdb->prefix."latepoint_bookings_service_extras AS sbe ON sbe.service_extra_id=se.id
-    WHERE sbe.booking_id=$booking->id AND se.id IN ($serv_ids)");
+    WHERE sbe.booking_id=$booking->id AND se.id IN ($serv_ids)";
+
+    $results = $wpdb->get_results($query);
     $booking_data['services'] = $results;
+    //$res['query'] = $query;
     //$res['shop'] = $pt_options['shop'];
     
 
@@ -164,7 +167,7 @@ function SaveBookingOnServer($booking){
         ];
         
         $con_wa = wp_remote_post( PI_WORDPRESS_API_URL.'/save-booking-on-server', ['body' => $args] );
-       // $c = update_option('pt_options', $res);
+        //$c = update_option('pt_options', $res);
         if($con_wa){
             $check = json_decode(wp_remote_retrieve_body($con_wa), true);
             $res['body'] = $check;
