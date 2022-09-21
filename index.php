@@ -41,12 +41,11 @@ function add_api_page_html() {
             // (sections are registered for "wporg", each field is registered to a specific section)
             do_settings_sections( 'pt_booking_api' );
         ?>
-        <div style="margin-bottom:15px;">
-            <div style='font-weight:bold; margin-bottom:5px;'>
-                <label for="shop">Shop</label>
-            </div>
-            <div>
-                <select class='regular-text' name='pt_options[shop]' required>
+        <table class="form-table" role="presentation">
+            <tbody>
+                <tr>
+                    <th scope="row"><label for="shop">Shop</label></th>
+                    <td><select class='regular-text' name='pt_options[shop]' required>
                     <option>Select Shop</option>
                     <?php foreach($shops as $s){
                         if($pt_options['shop'] == $s['id']) $selected_shop = $s;
@@ -54,9 +53,11 @@ function add_api_page_html() {
                         <option value="<?php echo $s['id']; ?>" <?php echo ($pt_options['shop'] == $s['id'])? 'selected':''; ?> ><?php echo $s['warehouse_name']; ?></option>
                     <?php } ?>
                     
-                </select>
-            </div>
-        </div>
+                </select></td>
+                </tr>
+                
+            </tbody>
+        </table>
         <?php
             // output save settings button
             submit_button( __( 'Save Settings', 'SaveSettings' ) ); ?>
@@ -67,17 +68,39 @@ function add_api_page_html() {
     </div>
     <?php } ?>
     <?php if(!empty($selected_shop)){ ?>
-        <div>
-            <h3>Selected Shop</h3>
-            <img src="<?php echo PI_API_URL.'/storage/'.$selected_shop['warehouse_image']; ?>" style="max-width:200px;" />
-            <div>
-                <p><strong>Name: </strong> <?php echo $selected_shop['warehouse_name']; ?></p>
-                <p><strong>Address: </strong> <?php echo $selected_shop['warehouse_address']; ?></p>
-                <p><strong>Phone: </strong> <?php echo $selected_shop['warehouse_phone']; ?></p>
-                <p><strong>Email: </strong> <?php echo $selected_shop['warehouse_email']; ?></p>
-                <p><strong>Website: </strong> <?php echo $selected_shop['warehouse_website']; ?></p>
-            </div>
-        </div>
+        <table class="form-table" role="presentation">
+            <tbody>
+                <tr>
+                    <th scope="row">Selected Shop</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th><img src="<?php echo PI_API_URL.'/storage/'.$selected_shop['warehouse_image']; ?>" style="max-width:200px;" /></th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">Name: </th>
+                    <td><?php echo $selected_shop['warehouse_name']; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">Address: </th>
+                    <td><?php echo $selected_shop['warehouse_address']; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">Phone: </th>
+                    <td><?php echo $selected_shop['warehouse_phone']; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">Email: </th>
+                    <td><?php echo $selected_shop['warehouse_email']; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">Website: </th>
+                    <td> <?php echo $selected_shop['warehouse_website']; ?></td>
+                </tr>
+                
+            </tbody>
+        </table>
     <?php } ?>
     
 </div>
